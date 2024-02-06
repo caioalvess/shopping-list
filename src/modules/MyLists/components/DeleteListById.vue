@@ -1,6 +1,6 @@
 <template>
   <div class="h-full flex-1 flex flex-col">
-    <p class="mb-5">Are you sure you want to delete the aaa list?</p>
+    <p class="mb-5">Are you sure you want to delete the {{ listName }} list?</p>
 
     <div class="h-full flex-1 flex items-end gap-4 py-6">
       <button
@@ -8,7 +8,7 @@
         type="submit"
         class="h-10 min-w-24 flex justify-center items-center gap-2 text-white bg-blue-700 hover:bg-blue-800 font-medium rounded-lg text-sm px-5 py-2.5"
       >
-        Confirm 
+        Confirm
       </button>
       <button
         @click="handleCancel"
@@ -23,6 +23,7 @@
 
 <script setup lang="ts">
 const emit = defineEmits(["confirm", "cancel"]);
+const { listName } = defineProps<{ listName: string }>();
 
 function handleConfirm() {
   return emit("confirm");

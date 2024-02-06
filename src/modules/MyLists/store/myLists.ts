@@ -25,6 +25,11 @@ export const useMyListsStore = defineStore("myLists", () => {
     return localStorage.setItem("myLists", JSON.stringify(lists.value));
   }
 
+  function deleteAllLists() {
+    lists.value = [];
+    return localStorage.setItem("myLists", JSON.stringify(lists.value));
+  }
+
   onMounted(() => {
     const localStorageLists = JSON.parse(
       localStorage.getItem("myLists") || "[]"
@@ -37,5 +42,6 @@ export const useMyListsStore = defineStore("myLists", () => {
     lists,
     addNewList,
     deleteListById,
+    deleteAllLists,
   };
 });

@@ -19,7 +19,11 @@
     </div>
   </div>
   <Modal :title="`Delete list ${title}`" :show="showModal">
-    <DeleteListById @confirm="deleteListById(id)" @cancel="closeModal" />
+    <DeleteListById
+      @confirm="deleteListById(id)"
+      @cancel="closeModal"
+      :listName="title"
+    />
   </Modal>
 </template>
 
