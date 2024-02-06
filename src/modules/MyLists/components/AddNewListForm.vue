@@ -12,43 +12,42 @@
           required
           type="text"
           id="listName"
-          v-model="form.name"
+          v-model="name"
           class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
           placeholder="Lista de compras prezunic"
         />
-      </div>
-
-      <div class="h-full flex-1 flex items-end gap-4 py-6">
-        <button
-          type="submit"
-          class="h-10 min-w-24 flex justify-center items-center gap-2 text-white bg-blue-700 hover:bg-blue-800 font-medium rounded-lg text-sm px-5 py-2.5"
-        >
-          Submit
-        </button>
-        <button
-          type="button"
-          class="h-10 min-w-24 flex justify-center items-center gap-2 focus:outline-none text-white bg-red-700 hover:bg-red-800 font-medium rounded-lg text-sm px-5 py-2.5"
-        >
-          Cancel
-        </button>
+        <div>
+          <div class="h-full flex-1 flex items-end gap-4 py-6">
+            <button
+              type="submit"
+              class="h-10 min-w-24 flex justify-center items-center gap-2 text-white bg-blue-700 hover:bg-blue-800 font-medium rounded-lg text-sm px-5 py-2.5"
+            >
+              Submit
+            </button>
+            <button
+              @click="handleCancel"
+              type="button"
+              class="h-10 min-w-24 flex justify-center items-center gap-2 focus:outline-none text-white bg-red-700 hover:bg-red-800 font-medium rounded-lg text-sm px-5 py-2.5"
+            >
+              Cancel
+            </button>
+          </div>
+        </div>
       </div>
     </form>
   </div>
 </template>
 
 <script setup lang="ts">
-import { useMyListsStore } from "@/modules/MyLists/store/myLists";
-import { reactive } from "vue";
+const emit = defineEmits(["submit", "cancel"]);
 
-import type { addNewListProps } from "@/modules/MyLists/types/addNewListType";
-
-const listsStore = useMyListsStore();
-
-const form = reactive<addNewListProps>({
-  name: "",
-});
+const name = defineModel<string>("name");
 
 function handleSubmit() {
-  listsStore.addNewList(form);
+  return emit("submit");
+}
+
+function handleCancel() {
+  return emit("cancel");
 }
 </script>

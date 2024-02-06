@@ -17,5 +17,8 @@
 <script setup lang="ts">
 import Subtitle from "./Subtitle.vue";
 
-const { title, show } = defineProps<{ title: string; show: boolean }>();
+const { title, show } = defineProps<{
+  title: string;
+  show: boolean;
+}>();
 </script>
