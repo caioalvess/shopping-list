@@ -1,10 +1,11 @@
 import { defineStore } from "pinia";
-import { onMounted, reactive, ref } from "vue";
+import { onMounted, ref } from "vue";
 
 import type { myListsProps } from "../types/myListsType";
 import type { addNewListProps } from "../types/addNewListType";
 
 import { v4 as uuidv4 } from "uuid";
+import type { updateListProps } from "../types/updateListType";
 
 export const useMyListsStore = defineStore("myLists", () => {
   const lists = ref<myListsProps[]>([]);
@@ -17,16 +18,29 @@ export const useMyListsStore = defineStore("myLists", () => {
     };
 
     lists.value.push(newList);
-    return localStorage.setItem("myLists", JSON.stringify(lists.value));
+    return updateLocalStorage();
   }
 
   function deleteListById(id: string) {
     lists.value = lists.value.filter((res: myListsProps) => res.id !== id);
-    return localStorage.setItem("myLists", JSON.stringify(lists.value));
+    return updateLocalStorage();
   }
 
   function deleteAllLists() {
     lists.value = [];
+    return updateLocalStorage();
+  }
+
+  function updateList({ id, newListTitle }: updateListProps) {
+    lists.value = lists.value.filter((res: myListsProps) => {
+      if (res.id === id) {
+        return (res.title = newListTitle);
+      }
+    });
+    return updateLocalStorage();
+  }
+
+  function updateLocalStorage() {
     return localStorage.setItem("myLists", JSON.stringify(lists.value));
   }
 
@@ -43,5 +57,6 @@ export const useMyListsStore = defineStore("myLists", () => {
     addNewList,
     deleteListById,
     deleteAllLists,
+    updateList,
   };
 });

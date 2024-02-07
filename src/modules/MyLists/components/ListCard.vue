@@ -1,5 +1,8 @@
 <template>
-  <div class="border-solid border-2 rounded border-gray-800 p-4 flex flex-col">
+  <div
+    class="border-solid border-2 rounded border-gray-800 p-4 flex flex-col"
+    @click="openModal('updateList')"
+  >
     <h3 class="text-xl font-medium mb-3">{{ title }}</h3>
     <p class="font-normal text-gray-800">Created at {{ createdAt }}</p>
     <div class="h-full flex justify-between items-end mt-4">
@@ -10,7 +13,7 @@
         Enter
       </button>
       <button
-        @click="openModal"
+        @click="openModal('deleteListById')"
         type="button"
         class="h-10 w-24 flex justify-center items-center focus:outline-none text-white bg-red-700 hover:bg-red-800 font-medium rounded-lg text-sm px-5 py-2.5"
       >
@@ -18,11 +21,27 @@
       </button>
     </div>
   </div>
-  <Modal :title="`Delete list ${title}`" :show="showModal">
+  <Modal
+    :title="
+      modalComponent === 'deleteListById'
+        ? `Delete list ${title}`
+        : `Update list ${title}`
+    "
+    :show="showModal"
+  >
     <DeleteListById
+      v-if="modalComponent === 'deleteListById'"
       @confirm="deleteListById(id)"
       @cancel="closeModal"
       :listName="title"
+    />
+
+    <UpdateList
+      v-else
+      :defaultTitle="title"
+      v-model:title="newListTitle"
+      @submit="updateList(id)"
+      @cancel="closeModal"
     />
   </Modal>
 </template>
@@ -31,6 +50,7 @@
 import { ref } from "vue";
 import Modal from "@/components/Modal.vue";
 import DeleteListById from "./DeleteListById.vue";
+import UpdateList from "./UpdateList.vue";
 import { useMyListsStore } from "@/modules/MyLists/store/myLists";
 
 const { id, title, createdAt } = defineProps<{
@@ -42,8 +62,11 @@ const { id, title, createdAt } = defineProps<{
 const myListsStore = useMyListsStore();
 
 const showModal = ref(false);
+const modalComponent = ref("");
+const newListTitle = ref("");
 
-function openModal() {
+function openModal(component: string) {
+  modalComponent.value = component;
   return (showModal.value = true);
 }
 
@@ -53,6 +76,15 @@ function closeModal() {
 
 function deleteListById(id: string) {
   myListsStore.deleteListById(id);
+  return closeModal();
+}
+
+function updateList(id: string) {
+  const data = {
+    id,
+    newListTitle: newListTitle.value,
+  };
+  myListsStore.updateList(data);
   return closeModal();
 }
 </script>
