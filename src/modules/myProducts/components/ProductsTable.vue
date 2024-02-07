@@ -1,41 +1,35 @@
 <template>
-  <table>
-    <tr>
-      <th>Company</th>
-      <th>Contact</th>
-      <th>Country</th>
-    </tr>
-    <tr>
-      <td>Alfreds Futterkiste</td>
-      <td>Maria Anders</td>
-      <td>Germany</td>
-    </tr>
-    <tr>
-      <td>Centro comercial Moctezuma</td>
-      <td>Francisco Chang</td>
-      <td>Mexico</td>
-    </tr>
-    <tr>
-      <td>Ernst Handel</td>
-      <td>Roland Mendel</td>
-      <td>Austria</td>
-    </tr>
-    <tr>
-      <td>Island Trading</td>
-      <td>Helen Bennett</td>
-      <td>UK</td>
-    </tr>
-    <tr>
-      <td>Laughing Bacchus Winecellars</td>
-      <td>Yoshi Tannamuri</td>
-      <td>Canada</td>
-    </tr>
-    <tr>
-      <td>Magazzini Alimentari Riuniti</td>
-      <td>Giovanni Rovelli</td>
-      <td>Italy</td>
+  <table v-if="data?.length">
+    <tr v-for="product in data" :key="product.id">
+      <td><input type="checkbox" /></td>
+      <td>{{ product.name }}</td>
+      <td>{{ product.price }}</td>
+      <td>{{ product.amount }}</td>
+      <td>{{ product.total }}</td>
+      <td><button>X</button></td>
     </tr>
   </table>
+
+  <div v-else><p>Empty</p></div>
 </template>
 
-<script setup lang="ts"></script>
+<script setup lang="ts">
+import type { ProductProps } from "@/modules/myProducts/types/myProductsType";
+
+const { data } = defineProps<{ data: ProductProps[] | undefined }>();
+</script>
+
+<style scoped>
+table {
+  margin: 30px 0;
+  font-family: arial, sans-serif;
+  width: 100%;
+  border-collapse: collapse;
+}
+
+td {
+  border: 1px solid #dddddd;
+  text-align: left;
+  padding: 8px;
+}
+</style>
