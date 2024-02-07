@@ -1,12 +1,15 @@
 <template>
-  <div
-    class="border-solid border-2 rounded border-gray-800 p-4 flex flex-col"
-    @click="openModal('updateList')"
-  >
-    <h3 class="text-xl font-medium mb-3">{{ title }}</h3>
+  <div class="border-solid border-2 rounded border-gray-800 p-4 flex flex-col">
+    <h3
+      class="text-xl font-medium mb-3 cursor-pointer"
+      @click="openModal('updateList')"
+    >
+      {{ title }}
+    </h3>
     <p class="font-normal text-gray-800">Created at {{ createdAt }}</p>
     <div class="h-full flex justify-between items-end mt-4">
       <button
+        @click="$router.push(`/myProducts/${id}`)"
         type="button"
         class="h-10 w-24 flex justify-center items-center text-white bg-blue-700 hover:bg-blue-800 font-medium rounded-lg text-sm px-5 py-2.5"
       >
@@ -51,7 +54,7 @@ import { ref } from "vue";
 import Modal from "@/components/Modal.vue";
 import DeleteListById from "./DeleteListById.vue";
 import UpdateList from "./UpdateList.vue";
-import { useMyListsStore } from "@/modules/MyLists/store/myLists";
+import { useMyListsStore } from "@/modules/myLists/stores/myLists";
 
 const { id, title, createdAt } = defineProps<{
   id: string;
@@ -88,3 +91,4 @@ function updateList(id: string) {
   return closeModal();
 }
 </script>
+@/modules/myLists/stores/myLists

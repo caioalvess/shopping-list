@@ -48,7 +48,7 @@ export const useMyListsStore = defineStore("myLists", () => {
     const localStorageLists = JSON.parse(
       localStorage.getItem("myLists") || "[]"
     );
-
+    console.log("kk");
     return lists.value.push(...localStorageLists);
   });
 
