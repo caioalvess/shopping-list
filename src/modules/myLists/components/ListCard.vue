@@ -1,24 +1,21 @@
 <template>
-  <div class="border-solid border-2 rounded border-gray-800 p-4 flex flex-col">
-    <h3
-      class="text-xl font-medium mb-3 cursor-pointer"
-      @click="openModal('updateList')"
-    >
+  <div class="nes-container with-title is-centered">
+    <h2 class="title" @click="openModal('updateList')">
       {{ title }}
-    </h3>
-    <p class="font-normal text-gray-800">Created at {{ createdAt }}</p>
-    <div class="h-full flex justify-between items-end mt-4">
+    </h2>
+    <p>Created at {{ createdAt }}</p>
+    <div class="action-container">
       <button
+        class="nes-btn is-success"
         @click="$router.push(`/myProducts/${id}`)"
         type="button"
-        class="h-10 w-24 flex justify-center items-center text-white bg-blue-700 hover:bg-blue-800 font-medium rounded-lg text-sm px-5 py-2.5"
       >
         Enter
       </button>
       <button
+        class="nes-btn is-error"
         @click="openModal('deleteListById')"
         type="button"
-        class="h-10 w-24 flex justify-center items-center focus:outline-none text-white bg-red-700 hover:bg-red-800 font-medium rounded-lg text-sm px-5 py-2.5"
       >
         Delete
       </button>
@@ -91,4 +88,13 @@ function updateList(id: string) {
   return closeModal();
 }
 </script>
-@/modules/myLists/stores/myLists
+
+<style scoped>
+p {
+  text-align: left;
+}
+.action-container {
+  display: flex;
+  justify-content: space-between;
+}
+</style>

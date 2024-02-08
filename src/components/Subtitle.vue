@@ -1,7 +1,8 @@
 <template>
-  <h1 class="text-xl font-medium my-5">
+  <h2 class="subtitle">
     <slot />
-  </h1>
+  </h2>
 </template>
 
 <script setup lang="ts"></script>
+

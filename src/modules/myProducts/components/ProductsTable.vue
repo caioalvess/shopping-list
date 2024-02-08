@@ -1,35 +1,58 @@
 <template>
-  <table v-if="data?.length">
-    <tr v-for="product in data" :key="product.id">
-      <td><input type="checkbox" /></td>
-      <td>{{ product.name }}</td>
-      <td>{{ product.price }}</td>
-      <td>{{ product.amount }}</td>
-      <td>{{ product.total }}</td>
-      <td><button>X</button></td>
-    </tr>
-  </table>
+  <div v-if="data.length" class="wrapper">
+    <table>
+      <tr v-for="product in data" :key="product.id">
+        <td class="checkbox-row">
+
+            <input type="checkbox" checked />
+
+        </td>
+        <td>{{ product.name }}</td>
+        <td>{{ product.price }}</td>
+        <td>{{ product.amount }}</td>
+        <td>{{ product.total }}</td>
+        <td class="btn-row">
+          <div class="nes-btn is-error"><i class="nes-icon close is-small"></i></div>
+        </td>
+      </tr>
+    </table>
+  </div>
 
   <div v-else><p>Empty</p></div>
 </template>
 
 <script setup lang="ts">
-import type { ProductProps } from "@/modules/myProducts/types/myProductsType";
+import type { MyProductsProps } from "@/modules/myProducts/types/myProductsType";
 
-const { data } = defineProps<{ data: ProductProps[] | undefined }>();
+const { data } = defineProps<{ data: MyProductsProps[] }>();
 </script>
 
 <style scoped>
-table {
+.wrapper {
+  width: 100%;
   margin: 30px 0;
-  font-family: arial, sans-serif;
+}
+
+table {
   width: 100%;
   border-collapse: collapse;
 }
 
+tr {
+  text-align: center;
+}
+
 td {
-  border: 1px solid #dddddd;
-  text-align: left;
-  padding: 8px;
+  font-size: 14px;
+  border-color: black;
+  border-style: solid;
+  border-width: 4px;
+}
+
+button {
+  height: 30px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 </style>

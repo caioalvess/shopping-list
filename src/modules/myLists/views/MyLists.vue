@@ -1,25 +1,23 @@
 <template>
-  <div class="container mx-auto">
+  <div class="container">
     <Title>My Lists</Title>
-    <div class="flex gap-4">
+    <div class="action-container">
       <button
+        class="nes-btn is-primary"
         @click="openModal('addNewListForm')"
         type="button"
-        class="h-10 min-w-24 flex justify-center items-center gap-2 text-white bg-blue-700 hover:bg-blue-800 font-medium rounded-lg text-sm px-5 py-2.5"
       >
         Create new list
       </button>
       <button
+        class="nes-btn is-error"
         @click="openModal('deleteAllLists')"
         type="button"
-        class="h-10 min-w-24 flex justify-center items-center gap-2 focus:outline-none text-white bg-red-700 hover:bg-red-800 font-medium rounded-lg text-sm px-5 py-2.5"
       >
         Delete all
       </button>
     </div>
-    <div
-      class="my-6 grid grid-flow-row gap-8 text-neutral-600 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4"
-    >
+    <div class="content">
       <ListCard
         v-for="list in myListStore.lists"
         :key="list.id"
@@ -86,4 +84,42 @@ function deleteAllLists() {
   return closeModal();
 }
 </script>
-@/modules/myLists/stores/myLists
+
+<style scoped>
+.container {
+  @media (min-width: 900px) {
+    width: 80%;
+
+    margin: 0 auto;
+    padding: 20px 0;
+  }
+
+  width: 100%;
+  padding: 10px;
+}
+
+.action-container {
+  display: flex;
+  flex-direction: column;
+
+  gap: 16px;
+}
+
+.content {
+  display: grid;
+  margin-top: 1.5rem;
+  margin-bottom: 1.5rem;
+  grid-auto-flow: row;
+  gap: 2rem;
+
+  @media (min-width: 640px) {
+    grid-template-columns: repeat(1, minmax(0, 1fr));
+  }
+  @media (min-width: 890px) {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  @media (min-width: 1120px) {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+</style>

@@ -1,12 +1,7 @@
 <template>
   <Teleport to="body">
-    <div
-      v-if="show"
-      class="w-full h-screen bg-black bg-opacity-30 absolute top-0 right-0 flex justify-center items-center"
-    >
-      <div
-        class="flex flex-col w-full h-screen sm:w-8/12 md:w-6/12 sm:h-auto lg:w-5/12 sm:border-2 border-none sm:border-solid sm:border-gray-700 bg-white rounded px-6"
-      >
+    <div v-if="show" class="modal-wrapper">
+      <div class="nes-dialog modal" id="dialog-default">
         <Subtitle>{{ title }}</Subtitle>
         <slot />
       </div>
@@ -22,3 +17,34 @@ const { title, show } = defineProps<{
   show: boolean;
 }>();
 </script>
+
+<style scoped>
+.modal-wrapper {
+  width: 100%;
+  height: 100%;
+
+  position: absolute;
+  top: 0;
+  left: 0;
+
+  overflow: hidden;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  background-color: rgba(0, 0, 0, 0.774);
+}
+
+.modal {
+  width: 100%;
+  height: 100vh;
+
+  padding: 30px 30px;
+
+  background-color: white;
+  border-color: black;
+  border-style: solid;
+  border-width: 4px;
+}
+</style>
