@@ -1,0 +1,121 @@
+// .btn {
+//   padding: 10px 20px;
+//   border: 0;
+//   position: relative;
+
+//   &.btn-default {
+//     background: var(--white);
+//     box-shadow: inset -4px -4px #adafbc;
+//   }
+// }
+
+.btn {
+  font-family: "Press Start 2P", Arial, Helvetica, sans-serif;
+  font-weight: 600;
+  font-size: 11px;
+  cursor: pointer;
+  border-color: var(--black);
+  border-style: solid;
+  border-width: 4px 0;
+  display: inline-block;
+  padding: 15px 10px;
+  position: relative;
+
+  &::after {
+    background-color: var(--black);
+    content: "";
+    display: block;
+    height: 100%;
+    position: absolute;
+    right: -4px;
+    top: 0;
+    width: 4px;
+  }
+
+  &::before {
+    background-color: var(--black);
+    content: "";
+    display: block;
+    height: 100%;
+    position: absolute;
+    left: -4px;
+    top: 0;
+    width: 4px;
+  }
+
+  &.btn-default,
+  &.btn-primary,
+  &.btn-negative,
+  &.btn-warning {
+    &:disabled {
+      cursor: not-allowed;
+      opacity: 0.6;
+      background-color: var(--grey);
+      box-shadow: inset -4px -4px var(--grey-010);
+
+      &:active {
+        box-shadow: inset -4px -4px var(--grey-010);
+        transform: none;
+      }
+    }
+  }
+
+  &.btn-default {
+    background-color: var(--white);
+    color: var(--black);
+    box-shadow: inset -4px -4px var(--grey-010);
+
+    &:active {
+      box-shadow: inset 4px 4px var(--grey-010);
+      transform: translateY(2px);
+    }
+  }
+
+  &.btn-primary {
+    background-color: var(--primary);
+    color: var(--white);
+    box-shadow: inset -4px -4px var(--primary-010);
+
+    &:active {
+      box-shadow: inset 4px 4px var(--primary-010);
+
+      transform: translateY(2px);
+    }
+  }
+
+  &.btn-positive {
+    background-color: var(--positive);
+    color: var(--white);
+    box-shadow: inset -4px -4px var(--positive-010);
+
+    &:active {
+      box-shadow: inset 4px 4px var(--positive-010);
+
+      transform: translateY(2px);
+    }
+  }
+
+  &.btn-negative {
+    background-color: var(--negative);
+    color: var(--white);
+    box-shadow: inset -4px -4px var(--negative-010);
+
+    &:active {
+      box-shadow: inset 4px 4px var(--negative-010);
+
+      transform: translateY(2px);
+    }
+  }
+
+  &.btn-warning {
+    background-color: var(--warning);
+    color: var(--black);
+    box-shadow: inset -4px -4px var(--warning-010);
+
+    &:active {
+      box-shadow: inset 4px 4px var(--warning-010);
+
+      transform: translateY(2px);
+    }
+  }
+}

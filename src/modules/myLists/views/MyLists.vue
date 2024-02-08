@@ -1,16 +1,16 @@
 <template>
-  <div class="container">
+  <div class="wrapper">
     <Title>My Lists</Title>
     <div class="action-container">
       <button
-        class="nes-btn is-primary"
+        class="btn btn-primary"
         @click="openModal('addNewListForm')"
         type="button"
       >
-        Create new list
+        Create new
       </button>
       <button
-        class="nes-btn is-error"
+        class="btn btn-negative"
         @click="openModal('deleteAllLists')"
         type="button"
       >
@@ -86,23 +86,10 @@ function deleteAllLists() {
 </script>
 
 <style scoped>
-.container {
-  @media (min-width: 900px) {
-    width: 80%;
-
-    margin: 0 auto;
-    padding: 20px 0;
-  }
-
-  width: 100%;
-  padding: 10px;
-}
-
 .action-container {
   display: flex;
-  flex-direction: column;
 
-  gap: 16px;
+  gap: 24px;
 }
 
 .content {
@@ -110,12 +97,9 @@ function deleteAllLists() {
   margin-top: 1.5rem;
   margin-bottom: 1.5rem;
   grid-auto-flow: row;
-  gap: 2rem;
+  gap: 1rem;
 
-  @media (min-width: 640px) {
-    grid-template-columns: repeat(1, minmax(0, 1fr));
-  }
-  @media (min-width: 890px) {
+  @media (min-width: 547px) {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
   @media (min-width: 1120px) {

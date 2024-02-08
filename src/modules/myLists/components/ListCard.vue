@@ -1,19 +1,19 @@
 <template>
-  <div class="nes-container with-title is-centered">
+  <div class="container">
     <h2 class="title" @click="openModal('updateList')">
       {{ title }}
     </h2>
     <p>Created at {{ createdAt }}</p>
     <div class="action-container">
       <button
-        class="nes-btn is-success"
+        class="btn btn-positive"
         @click="$router.push(`/myProducts/${id}`)"
         type="button"
       >
         Enter
       </button>
       <button
-        class="nes-btn is-error"
+        class="btn btn-negative"
         @click="openModal('deleteListById')"
         type="button"
       >
