@@ -25,6 +25,11 @@ export function useMyProducts() {
     updateLocalStorage();
   }
 
+  function deleteAllProducts() {
+    myProducts.value = [];
+    return updateLocalStorage();
+  }
+
   const otherProductsById = computed(() => {
     return getLocalStorage().filter(
       (res: MyProductsProps) => res.listId !== listId.value
@@ -55,12 +60,13 @@ export function useMyProducts() {
       );
       myProducts.value.push(...productsByListId);
 
-      console.log(myProducts.value)
+      console.log(myProducts.value);
     }
   });
 
   return {
     myProducts,
     addNewProduct,
+    deleteAllProducts,
   };
 }
