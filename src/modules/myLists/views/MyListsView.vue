@@ -89,7 +89,7 @@ function deleteAllLists() {
 .action-container {
   display: flex;
 
-  gap: 24px;
+  gap: 20px;
 }
 
 .content {

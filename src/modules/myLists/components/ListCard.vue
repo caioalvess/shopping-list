@@ -1,6 +1,6 @@
 <template>
   <div class="container">
-    <h2 class="title" @click="openModal('updateList')">
+    <h2 @click="openModal('updateList')">
       {{ title }}
     </h2>
     <p>Created at {{ createdAt }}</p>
@@ -95,6 +95,6 @@ p {
 }
 .action-container {
   display: flex;
-  justify-content: space-between;
+  gap: 20px;
 }
 </style>

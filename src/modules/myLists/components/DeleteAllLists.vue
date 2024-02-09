@@ -1,11 +1,13 @@
 <template>
-  <div class="wrapper">
-    <p>Are you sure you want to delete all lists?</p>
+  <p>Are you sure you want to delete all lists?</p>
 
-    <div class="action-container">
-      <button class="nes-btn is-primary" @click="handleConfirm" type="submit">Confirm</button>
-      <button class="nes-btn is-error" @click="handleCancel" type="button">Cancel</button>
-    </div>
+  <div class="action-container">
+    <button class="btn btn-primary" @click="handleConfirm" type="submit">
+      Confirm
+    </button>
+    <button class="btn btn-negative" @click="handleCancel" type="button">
+      Cancel
+    </button>
   </div>
 </template>
 
@@ -40,7 +42,5 @@ p {
   display: flex;
   align-items: flex-end;
   gap: 20px;
-
-  padding: 20px 0;
 }
 </style>

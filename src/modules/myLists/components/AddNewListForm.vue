@@ -1,9 +1,9 @@
 <template>
-  <div class="wrapper">
-    <p>Choose a name for your list and start adding products!</p>
-    <form @submit.prevent="handleSubmit">
-      <div class="nes-field">
-        <label for="listName">List Name</label>
+  <p>Choose a name for your list and start adding products!</p>
+  <form @submit.prevent="handleSubmit">
+    <div class="field">
+      <label for="listName">List Name*</label>
+      <div>
         <input
           class="nes-input"
           required
@@ -12,21 +12,17 @@
           v-model="name"
           placeholder="Lista de compras prezunic"
         />
-        <div>
-          <div class="action-container">
-            <button class="nes-btn is-primary" type="submit">Submit</button>
-            <button
-              class="nes-btn is-error"
-              @click="handleCancel"
-              type="button"
-            >
-              Cancel
-            </button>
-          </div>
-        </div>
       </div>
-    </form>
-  </div>
+    </div>
+    <div>
+      <div class="action-container">
+        <button class="btn btn-primary" type="submit">Submit</button>
+        <button class="btn btn-negative" @click="handleCancel" type="button">
+          Cancel
+        </button>
+      </div>
+    </div>
+  </form>
 </template>
 
 <script setup lang="ts">
@@ -56,16 +52,6 @@ p {
   margin-bottom: 20px;
 }
 
-form {
-  height: 100%;
-
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
-
-  position: relative;
-}
-
 .action-container {
   height: 100%;
 
@@ -73,7 +59,5 @@ form {
   display: flex;
   align-items: flex-end;
   gap: 20px;
-
-  padding: 20px 0;
 }
 </style>

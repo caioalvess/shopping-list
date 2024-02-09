@@ -1,7 +1,7 @@
 <template>
   <Teleport to="body">
     <div v-if="show" class="modal-wrapper">
-      <div class="nes-dialog modal" id="dialog-default">
+      <div class="modal" id="dialog-default">
         <Subtitle>{{ title }}</Subtitle>
         <slot />
       </div>
@@ -40,11 +40,18 @@ const { title, show } = defineProps<{
   width: 100%;
   height: 100vh;
 
-  padding: 30px 30px;
+  padding: 0 24px 24px 24px;
 
   background-color: white;
-  border-color: black;
-  border-style: solid;
-  border-width: 4px;
+  border: none;
+
+  @media (min-width: 547px) {
+    min-width: 300px;
+    width: min-content;
+    height: min-content;
+    border-color: black;
+    border-style: solid;
+    border-width: 4px;
+  }
 }
 </style>
