@@ -1,12 +1,21 @@
+import { defineStore } from "pinia";
 import { computed, onMounted, ref } from "vue";
+import { v4 as uuidv4 } from "uuid";
 import type { MyProductsProps } from "../types/myProductsType";
 import type { AddNewProductProps } from "../types/addNewProductType";
-import { v4 as uuidv4 } from "uuid";
 import { useRoute } from "vue-router";
-export function useMyProducts() {
+
+type UpdateProductProps = {
+  id: string;
+  name?: string;
+  price?: string;
+  amount?: string;
+  checked?: boolean;
+};
+
+export const useMyProductsStore = defineStore("myProducts", () => {
   const route = useRoute();
   const listId = ref(route.params.id as string);
-
   const myProducts = ref<MyProductsProps[]>([]);
 
   function addNewProduct({ name, price, amount }: AddNewProductProps) {
@@ -25,23 +34,27 @@ export function useMyProducts() {
     updateLocalStorage();
   }
 
-  function deleteAllProducts() {
-    myProducts.value = [];
-    return updateLocalStorage();
-  }
-
   function checkProduct(id: string) {
-    const index = myProducts.value.findIndex(
-      (product: MyProductsProps) => product.id === id
-    );
-
-    const product = myProducts.value.filter((product: MyProductsProps) => {
-      return product.id == id;
+    myProducts.value.forEach((product: MyProductsProps) => {
+      if (product.id === id) {
+        product.checked = !product.checked;
+      }
     });
 
-    product[0].checked = !product[0].checked;
+    updateLocalStorage();
+  }
 
-    myProducts.value[index] = product[0];
+  function deleteAllProducts() {
+    myProducts.value = [];
+    updateLocalStorage();
+  }
+
+  function deleteProductById(id: string) {
+    const restOfProducts = myProducts.value.filter(
+      (product: MyProductsProps) => product.id !== id
+    );
+
+    myProducts.value = restOfProducts;
 
     updateLocalStorage();
   }
@@ -52,15 +65,15 @@ export function useMyProducts() {
     );
   });
 
+  function getLocalStorage() {
+    return JSON.parse(localStorage.getItem("myProducts") || "[]");
+  }
+
   function updateLocalStorage() {
-    return localStorage.setItem(
+    localStorage.setItem(
       "myProducts",
       JSON.stringify([...otherProductsById.value, ...myProducts.value])
     );
-  }
-
-  function getLocalStorage() {
-    return JSON.parse(localStorage.getItem("myProducts") || "[]");
   }
 
   onMounted(() => {
@@ -72,7 +85,7 @@ export function useMyProducts() {
       );
 
       const productsByListId = localStorageProducts.filter(
-        (res: MyProductsProps) => res.listId === listId.value
+        (res: MyProductsProps) => res.listId === route.params.id
       );
       myProducts.value.push(...productsByListId);
     }
@@ -81,7 +94,8 @@ export function useMyProducts() {
   return {
     myProducts,
     addNewProduct,
-    deleteAllProducts,
     checkProduct,
+    deleteAllProducts,
+    deleteProductById
   };
-}
+});

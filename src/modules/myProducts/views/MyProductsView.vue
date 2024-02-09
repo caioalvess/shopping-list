@@ -18,7 +18,17 @@
       </button>
     </div>
     <div class="content">
-      <ProductCard :data="products.myProducts.value" />
+      <ProductCard
+        v-for="product in myProductsStore.myProducts"
+        :key="product.id"
+        :name="product.name"
+        :amount="product.amount"
+        :checked="product.checked"
+        :id="product.id"
+        :listId="product.listId"
+        :total="product.total"
+        :price="product.price"
+      />
     </div>
   </div>
   <Modal
@@ -51,11 +61,13 @@ import ProductCard from "@/modules/myProducts/components/ProductCard.vue";
 import Modal from "@/components/Modal.vue";
 import AddNewProduct from "@/modules/myProducts/components/AddNewProduct.vue";
 import DeleteAllProducts from "../components/DeleteAllProducts.vue";
-import { ref } from "vue";
+import { onMounted, ref } from "vue";
 
 import { useMyProducts } from "@/modules/myProducts/composables/useMyProducts";
+import { useMyProductsStore } from "../stores/myProducts";
 
 const products = useMyProducts();
+const myProductsStore = useMyProductsStore();
 
 const showModal = ref(false);
 const modalComponent = ref("");
@@ -68,21 +80,25 @@ const product = ref({
 
 function openModal(component: string) {
   modalComponent.value = component;
-  return (showModal.value = true);
+  showModal.value = true;
 }
 
 function closeModal() {
-  return (showModal.value = false);
+  if (modalComponent.value === "addNewProduct") {
+    product.value.name = "";
+    product.value.price = "";
+  }
+  showModal.value = false;
 }
 
 function addNewProduct() {
-  products.addNewProduct(product.value);
-  return closeModal();
+  myProductsStore.addNewProduct(product.value);
+  closeModal();
 }
 
 function deleteAllProducts() {
-  products.deleteAllProducts();
-  return closeModal();
+  myProductsStore.deleteAllProducts();
+  closeModal();
 }
 </script>
 
