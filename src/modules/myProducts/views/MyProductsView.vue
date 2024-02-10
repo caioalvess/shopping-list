@@ -1,6 +1,6 @@
 <template>
   <div class="wrapper">
-    <Title>Lista carrefour</Title>
+    <Title>{{ $route.params.name }}</Title>
     <div class="action-container">
       <button
         class="btn btn-primary"
@@ -61,12 +61,9 @@ import ProductCard from "@/modules/myProducts/components/ProductCard.vue";
 import Modal from "@/components/Modal.vue";
 import AddNewProduct from "@/modules/myProducts/components/AddNewProduct.vue";
 import DeleteAllProducts from "../components/DeleteAllProducts.vue";
-import { onMounted, ref } from "vue";
-
-import { useMyProducts } from "@/modules/myProducts/composables/useMyProducts";
+import { ref } from "vue";
 import { useMyProductsStore } from "../stores/myProducts";
 
-const products = useMyProducts();
 const myProductsStore = useMyProductsStore();
 
 const showModal = ref(false);
