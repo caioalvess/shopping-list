@@ -1,6 +1,6 @@
 <template>
   <div class="container">
-    <div class="title">{{ name }}</div>
+    <div class="title" @click="openModal('updateProduct')">{{ name }}</div>
     <div class="content">
       <p>
         Price: <span>R$ {{ Number(price).toFixed(2) }}</span>
@@ -41,9 +41,21 @@
     />
 
     <DeleteProductById
-      v-else
+      v-if="modalComponent === 'deleteProductById'"
       v-model:productName="productName"
       @confirm="deleteProductById(id)"
+      @cancel="closeModal"
+    />
+
+    <UpdateProduct
+      v-else
+      :defaultName="name"
+      :defaultPrice="price"
+      :defaultAmount="amount"
+      v-model:name="newProductName"
+      v-model:price="newProductPrice"
+      v-model:amount="newProductAmount"
+      @confirm="updateProduct(id)"
       @cancel="closeModal"
     />
   </Modal>
@@ -51,26 +63,41 @@
 
 <script setup lang="ts">
 import type { MyProductsProps } from "@/modules/myProducts/types/myProductsType";
-import { useMyProducts } from "../composables/useMyProducts";
 import { useMyProductsStore } from "../stores/myProducts";
 import { ref } from "vue";
 import DeleteAllProducts from "./DeleteAllProducts.vue";
 import Modal from "@/components/Modal.vue";
 import DeleteProductById from "./DeleteProductById.vue";
+import UpdateProduct from "./UpdateProduct.vue";
 
-const { id, name, listId, checked, price, amount, total } =
+const { id, name, checked, price, amount, total } =
   defineProps<MyProductsProps>();
 
-const products = useMyProducts();
 const myProductsStore = useMyProductsStore();
 
 const productName = ref(name);
+
+const newProductName = ref("");
+const newProductPrice = ref("");
+const newProductAmount = ref("");
 
 const showModal = ref(false);
 const modalComponent = ref("");
 
 function deleteProductById(id: string) {
   myProductsStore.deleteProductById(id);
+  closeModal();
+}
+
+function updateProduct(id: string) {
+  const data = {
+    id,
+    name: newProductName.value,
+    price: newProductPrice.value,
+    amount: newProductAmount.value,
+  };
+
+  myProductsStore.updateProduct(data);
   closeModal();
 }
 

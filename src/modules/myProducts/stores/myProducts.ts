@@ -3,15 +3,8 @@ import { computed, onMounted, ref } from "vue";
 import { v4 as uuidv4 } from "uuid";
 import type { MyProductsProps } from "../types/myProductsType";
 import type { AddNewProductProps } from "../types/addNewProductType";
+import type { UpdateProductsProps } from "../types/updateProductsType";
 import { useRoute } from "vue-router";
-
-type UpdateProductProps = {
-  id: string;
-  name?: string;
-  price?: string;
-  amount?: string;
-  checked?: boolean;
-};
 
 export const useMyProductsStore = defineStore("myProducts", () => {
   const route = useRoute();
@@ -42,6 +35,18 @@ export const useMyProductsStore = defineStore("myProducts", () => {
     });
 
     updateLocalStorage();
+  }
+
+  function updateProduct({ id, name, price, amount }: UpdateProductsProps) {
+    myProducts.value.forEach((product: MyProductsProps) => {
+      if (product.id === id) {
+        product.name = name;
+        product.price = price;
+        product.amount = amount;
+      }
+    });
+
+    return updateLocalStorage();
   }
 
   function deleteAllProducts() {
@@ -85,17 +90,19 @@ export const useMyProductsStore = defineStore("myProducts", () => {
       );
 
       const productsByListId = localStorageProducts.filter(
-        (res: MyProductsProps) => res.listId === route.params.id
+        (res: MyProductsProps) => res.listId === listId.value
       );
       myProducts.value.push(...productsByListId);
     }
   });
 
   return {
+    listId,
     myProducts,
     addNewProduct,
     checkProduct,
     deleteAllProducts,
-    deleteProductById
+    deleteProductById,
+    updateProduct,
   };
 });
