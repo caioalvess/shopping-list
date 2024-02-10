@@ -7,7 +7,7 @@
     <div class="action-container">
       <button
         class="btn btn-positive"
-        @click="$router.push(`/myProducts/${id}`)"
+        @click="setRouterProducts(id)"
         type="button"
       >
         Enter
@@ -52,14 +52,19 @@ import Modal from "@/components/Modal.vue";
 import DeleteListById from "./DeleteListById.vue";
 import UpdateList from "./UpdateList.vue";
 import { useMyListsStore } from "@/modules/myLists/stores/myLists";
+import { useMyProductsStore } from "@/modules/myProducts/stores/myProducts";
+import { useRoute, useRouter } from "vue-router";
+import type { MyProductsProps } from "@/modules/myProducts/types/myProductsType";
 
 const { id, title, createdAt } = defineProps<{
   id: string;
   title: string;
   createdAt: string;
 }>();
+const router = useRouter();
 
 const myListsStore = useMyListsStore();
+const myProductsStore = useMyProductsStore();
 
 const showModal = ref(false);
 const modalComponent = ref("");
@@ -86,6 +91,22 @@ function updateList(id: string) {
   };
   myListsStore.updateList(data);
   return closeModal();
+}
+
+function setRouterProducts(id: string) {
+  if (localStorage.getItem("myProducts")) {
+    const localStorageProducts = JSON.parse(
+      localStorage.getItem("myProducts") || "[]"
+    );
+
+    const productsByListId = localStorageProducts.filter(
+      (res: MyProductsProps) => res.listId === id
+    );
+    myProductsStore.myProducts = productsByListId;
+  }
+
+  myProductsStore.listId = id;
+  router.push({ name: "myProducts", params: { id, name: title } });
 }
 </script>
 
