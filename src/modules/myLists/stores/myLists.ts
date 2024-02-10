@@ -32,9 +32,9 @@ export const useMyListsStore = defineStore("myLists", () => {
   }
 
   function updateList({ id, newListTitle }: updateListProps) {
-    lists.value = lists.value.filter((res: myListsProps) => {
-      if (res.id === id) {
-        return (res.title = newListTitle);
+    lists.value.forEach((product) => {
+      if (product.id === id) {
+        product.title = newListTitle;
       }
     });
     return updateLocalStorage();
