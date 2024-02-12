@@ -1,6 +1,15 @@
 <template>
   <div class="wrapper">
-    <Title>{{ $route.params.name }}</Title>
+    <nav>
+      <div @click="$router.back">
+        <img
+          src="../../../../public/left-arrow.svg"
+          alt="Voltar para o início"
+          width="40px"
+        />
+      </div>
+      <Title>{{ $route.params.name }}</Title>
+    </nav>
 
     <div class="action-container">
       <button
@@ -139,6 +148,12 @@ function clearSearchInput() {
 </script>
 
 <style scoped lang="scss">
+nav {
+  display: flex;
+  align-items: center;
+
+  gap: 20px;
+}
 .action-container {
   display: flex;
 
