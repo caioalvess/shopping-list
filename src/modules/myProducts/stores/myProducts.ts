@@ -8,8 +8,10 @@ import { useRoute } from "vue-router";
 
 export const useMyProductsStore = defineStore("myProducts", () => {
   const route = useRoute();
-  const listId = ref(route.params.id as string);
+  const listId = computed(() => route.params.id as string);
   const myProducts = ref<MyProductsProps[]>([]);
+
+  const inputFilterProducts = ref("");
 
   function addNewProduct({ name, price, amount }: AddNewProductProps) {
     const total = (Number(price) * Number(amount)).toFixed(2);
@@ -70,6 +72,46 @@ export const useMyProductsStore = defineStore("myProducts", () => {
     );
   });
 
+  const totalValue = computed(() => {
+    const productsTotalValue = myProducts.value
+      .filter((product: MyProductsProps) => product.checked)
+      .map((product: MyProductsProps) => Number(product.total));
+    if (productsTotalValue.length) {
+      const sum = productsTotalValue.reduce(
+        (accumulator, currentValue) => accumulator + currentValue
+      );
+      return sum.toFixed(2);
+    } else {
+      return "0";
+    }
+  });
+
+  const remainingProducts = computed(() => {
+    if (myProducts.value.length) {
+      return myProducts.value.filter(
+        (product: MyProductsProps) => !product.checked
+      ).length;
+    } else {
+      return 0;
+    }
+  });
+
+  const amount = computed(() => {
+    return myProducts.value.length;
+  });
+
+  const searchFilterProducts = computed(() => {
+    const lowerCaseInput = inputFilterProducts.value.toLowerCase();
+    const matches = myProducts.value.filter((item) =>
+      item.name.toLowerCase().includes(lowerCaseInput)
+    );
+    if (matches) {
+      return matches;
+    } else {
+      return myProducts.value;
+    }
+  });
+
   function getLocalStorage() {
     return JSON.parse(localStorage.getItem("myProducts") || "[]");
   }
@@ -97,6 +139,7 @@ export const useMyProductsStore = defineStore("myProducts", () => {
   });
 
   return {
+    inputFilterProducts,
     listId,
     myProducts,
     addNewProduct,
@@ -104,5 +147,9 @@ export const useMyProductsStore = defineStore("myProducts", () => {
     deleteAllProducts,
     deleteProductById,
     updateProduct,
+    totalValue,
+    remainingProducts,
+    amount,
+    searchFilterProducts,
   };
 });

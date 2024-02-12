@@ -1,6 +1,7 @@
 <template>
   <div class="wrapper">
     <Title>{{ $route.params.name }}</Title>
+
     <div class="action-container">
       <button
         class="btn btn-primary"
@@ -17,9 +18,35 @@
         Delete all
       </button>
     </div>
-    <div class="content">
+
+    <ProductInfos
+      :totalValue="myProductsStore.totalValue"
+      :remainingProducts="myProductsStore.remainingProducts"
+      :amount="myProductsStore.amount"
+    />
+
+    <div v-if="myProductsStore.myProducts.length" class="field input-box">
+      <label for="searchProduct">Search</label>
+      <div class="filter-box">
+        <div class="input">
+          <input
+            id="searchProduct"
+            type="text"
+            placeholder="1kg Feijão"
+            v-model="inputSearch"
+          />
+        </div>
+        <button class="btn btn-warning" @click="clearSearchInput">X</button>
+      </div>
+    </div>
+
+    <p v-if="!myProductsStore.myProducts.length">
+      Your product list is still empty...
+    </p>
+
+    <div v-else class="content">
       <ProductCard
-        v-for="product in myProductsStore.myProducts"
+        v-for="product in myProductsStore.searchFilterProducts"
         :key="product.id"
         :name="product.name"
         :amount="product.amount"
@@ -31,6 +58,7 @@
       />
     </div>
   </div>
+
   <Modal
     :title="
       modalComponent === 'addNewProduct'
@@ -61,8 +89,9 @@ import ProductCard from "@/modules/myProducts/components/ProductCard.vue";
 import Modal from "@/components/Modal.vue";
 import AddNewProduct from "@/modules/myProducts/components/AddNewProduct.vue";
 import DeleteAllProducts from "../components/DeleteAllProducts.vue";
-import { ref } from "vue";
+import { ref, watchEffect } from "vue";
 import { useMyProductsStore } from "../stores/myProducts";
+import ProductInfos from "@/modules/myProducts/components/ProductInfos.vue";
 
 const myProductsStore = useMyProductsStore();
 
@@ -73,6 +102,12 @@ const product = ref({
   name: "",
   price: "",
   amount: "1",
+});
+
+const inputSearch = ref("");
+
+watchEffect(() => {
+  myProductsStore.inputFilterProducts = inputSearch.value;
 });
 
 function openModal(component: string) {
@@ -97,13 +132,39 @@ function deleteAllProducts() {
   myProductsStore.deleteAllProducts();
   closeModal();
 }
+
+function clearSearchInput() {
+  inputSearch.value = "";
+}
 </script>
 
-<style scoped>
+<style scoped lang="scss">
 .action-container {
   display: flex;
 
   gap: 20px;
+}
+
+.input-box {
+  margin-top: 20px;
+
+  .filter-box {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+
+    button {
+      height: 31px;
+
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+  }
+}
+
+p {
+  margin-top: 50px;
 }
 
 .content {
