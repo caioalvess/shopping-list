@@ -4,21 +4,21 @@
     <form @submit.prevent="handleSubmit">
       <div class="field">
         <label for="productName">Name*</label>
-        <div>
+        <div class="input">
           <input required type="text" id="productName" v-model="name" />
         </div>
       </div>
 
       <div class="field">
         <label for="productPrice">Price*</label>
-        <div>
+        <div class="input">
           <input required type="text" id="productPrice" v-model="price" />
         </div>
       </div>
 
       <div class="field">
         <label for="productAmount">Amount*</label>
-        <div>
+        <div class="input">
           <input required type="text" id="productAmount" v-model="amount" />
         </div>
       </div>

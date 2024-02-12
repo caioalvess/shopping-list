@@ -6,7 +6,7 @@
     <p>Created at {{ createdAt }}</p>
     <div class="action-container">
       <button
-        class="btn btn-positive"
+        class="btn btn-default"
         @click="setRouterProducts(id)"
         type="button"
       >
@@ -105,7 +105,6 @@ function setRouterProducts(id: string) {
     myProductsStore.myProducts = productsByListId;
   }
 
-  myProductsStore.listId = id;
   router.push({ name: "myProducts", params: { id, name: title } });
 }
 </script>

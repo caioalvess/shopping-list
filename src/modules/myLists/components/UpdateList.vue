@@ -4,7 +4,7 @@
     <form @submit.prevent="handleSubmit">
       <div class="field">
         <label for="listName">List Name</label>
-        <div>
+        <div class="input">
           <input required type="text" id="listName" v-model="title" />
         </div>
       </div>

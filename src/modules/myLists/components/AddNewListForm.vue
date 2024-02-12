@@ -3,7 +3,7 @@
   <form @submit.prevent="handleSubmit">
     <div class="field">
       <label for="listName">List Name*</label>
-      <div>
+      <div class="input">
         <input
           class="nes-input"
           required

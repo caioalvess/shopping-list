@@ -3,7 +3,7 @@
     <form @submit.prevent="handleSubmit">
       <div class="field">
         <label for="productName">Name</label>
-        <div>
+        <div class="input">
           <input
             required
             type="text"
@@ -16,7 +16,7 @@
 
       <div class="field">
         <label for="productPrice">Price</label>
-        <div>
+        <div class="input">
           <input
             required
             type="text"
@@ -28,7 +28,7 @@
       </div>
       <div class="field">
         <label for="productAmount">Amount</label>
-        <div>
+        <div class="input">
           <input
             required
             type="string"
